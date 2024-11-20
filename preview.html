@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div>Hello word</div>
+
+    <script>
+        let db;
+        const request = indexedDB.open("filecache");
+        request.onerror = (event) => {
+            console.error("Why didn't you allow my web app to use IndexedDB?!");
+        };
+        request.onsuccess = (event) => {
+            console.log("event.target.result", event.target.result)
+            db = event.target.result;
+        };
+        const bc = new BroadcastChannel("code-channel")
+        bc.postMessage("console.log('message from the iframe preview')")
+        bc.onmessage = (ev) => {
+            console.log("ev.data", ev)
+        }
+        bc.onmessageerror = (ev) => {
+            console.log("error in event", ev)
+        }
+        const handleError = (err) => {
+            const root = document.querySelector('#root');
+            root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
+            console.error(err);
+        }
+        window.addEventListener('message', (event) => {
+            try {
+                eval(event.data);
+            } catch (err) {
+                handleError(err);
+            }
+        },false)
+    </script>
+</body>
+
+</html>
