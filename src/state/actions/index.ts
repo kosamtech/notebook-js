@@ -13,9 +13,9 @@ export interface DeleteCellAction {
     payload: string;
 }
 
-export interface InsertCellBeforeAction {
+export interface InsertCellAfterAction {
     payload: {
-        id: string;
+        id: string | null;
         type: CellType;
     };
 }
@@ -27,8 +27,26 @@ export interface UpdateCellAction {
     };
 }
 
+export interface BundleStartAction {
+    payload: {
+        cellId: string;
+    };
+}
+
+export interface BundleCompleteAction {
+    payload: {
+        cellId: string;
+        bundle: {
+            code: string;
+            err: string;
+        };
+    };
+}
+
 export type Action =
     | MoveCellAction
     | DeleteCellAction
-    | InsertCellBeforeAction
-    | UpdateCellAction;
+    | InsertCellAfterAction
+    | UpdateCellAction
+    | BundleStartAction
+    | BundleCompleteAction;
