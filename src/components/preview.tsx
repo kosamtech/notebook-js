@@ -9,7 +9,6 @@ interface PreviewProps {
 const Preview: FC<PreviewProps> = ({ code, err }) => {
     const iframe = useRef<HTMLIFrameElement | null>(null);
     let html = ``;
-    const bc = new BroadcastChannel("code-channel");
 
     useEffect(() => {
         if (!iframe.current) {
@@ -26,17 +25,7 @@ const Preview: FC<PreviewProps> = ({ code, err }) => {
                         root.innerHTML = '<div style="color: red;"><h4>Runtime Error</h4>' + err + '</div>';
                         console.error(err);
                     }
-                    const bc = new BroadcastChannel("code-channel");
-                    console.log("broadcast channel", bc);
-                    console.log("window.location", window.location);
-                    bc.postMessage("console.log('message from the iframe preview')");
-                    bc.onmessage = (ev) => {
-                        console.log("event in broadcast", ev);
-                    }
-                    bc.onmessageerror = (ev) => {
-                        console.log("event error in broadcast", ev)
-                    }
-                    window.addEventListener("message", (event) => {
+                    window.top.addEventListener("message", (event) => {
                         try {
                             eval(event.data);
                         } catch (err) {
@@ -49,32 +38,17 @@ const Preview: FC<PreviewProps> = ({ code, err }) => {
         `;
         iframe.current.srcdoc = html;
 
-        // create a persistent broadcast channel
         setTimeout(() => {
-            bc.postMessage(code);
+            window.postMessage(code, "*");
         }, 100);
-
-        return () => bc.close();
     }, [code]);
-
-    useEffect(() => {
-        bc.onmessage = (ev) => {
-            console.log("event message in bc preview", ev);
-        };
-    }, [bc.onmessage]);
-
-    useEffect(() => {
-        bc.onmessageerror = (ev) => {
-            console.log("event error in bc preview", ev);
-        };
-    }, [bc.onmessageerror]);
 
     return (
         <div className="preview-wrapper">
             <iframe
                 ref={iframe}
                 title="preview"
-                sandbox="allow-scripts"
+                sandbox="allow-scripts allow-same-origin"
                 srcDoc={html}
             ></iframe>
             {err && <div className="preview-error">{err}</div>}
