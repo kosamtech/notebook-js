@@ -1,6 +1,6 @@
 import { useState, useRef, FC } from "react";
 import MDEditor from "@uiw/react-md-editor";
-import useClickOutside from "../hooks/useClickOutside";
+import useClickOutside from "../hooks/use-click-outside";
 import "./text-editor.css";
 
 const TextEditor: FC = () => {
