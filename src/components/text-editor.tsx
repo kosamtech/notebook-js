@@ -1,12 +1,18 @@
 import { useState, useRef, FC } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import useClickOutside from "../hooks/use-click-outside";
+import { Cell } from "../state";
+import { useActions } from "../hooks/use-actions";
 import "./text-editor.css";
 
-const TextEditor: FC = () => {
+interface TextEditorProps {
+    cell: Cell;
+}
+
+const TextEditor: FC<TextEditorProps> = ({ cell }) => {
     const editorRef = useRef<HTMLDivElement | null>(null);
     const [editting, setEditting] = useState(false);
-    const [value, setValue] = useState("# Header");
+    const { updateCell } = useActions();
 
     useClickOutside(editorRef, setEditting);
 
@@ -15,8 +21,10 @@ const TextEditor: FC = () => {
             {editting ? (
                 <div className="text-editor" ref={editorRef}>
                     <MDEditor
-                        value={value}
-                        onChange={(v) => setValue(String(v))}
+                        value={cell.content}
+                        onChange={(v) =>
+                            updateCell({ id: cell.id, content: String(v) })
+                        }
                     />
                 </div>
             ) : (
@@ -25,7 +33,9 @@ const TextEditor: FC = () => {
                     onClick={() => setEditting(true)}
                 >
                     <div className="card-content">
-                        <MDEditor.Markdown source={value} />
+                        <MDEditor.Markdown
+                            source={cell.content || "Click to edit"}
+                        />
                     </div>
                 </div>
             )}
