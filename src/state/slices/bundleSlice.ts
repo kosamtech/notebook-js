@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { BundleStartAction, BundleCompleteAction } from "../actions";
+import {
+    BundleStartAction,
+    BundleCompleteAction,
+    createBundle,
+} from "../actions";
 
 interface BundleState {
     [key: string]:
@@ -31,6 +35,15 @@ const bundleSlice = createSlice({
                 err: action.payload.bundle.err,
             };
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(createBundle.fulfilled, (state, action) => {
+            state[action.payload.cellId] = {
+                loading: false,
+                code: action.payload.bundle.code,
+                err: action.payload.bundle.err,
+            };
+        });
     },
 });
 

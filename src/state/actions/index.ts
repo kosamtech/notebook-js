@@ -1,4 +1,6 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CellType } from "../cell";
+import bundle from "../../bundler";
 
 export type Direction = "up" | "down";
 
@@ -42,6 +44,31 @@ export interface BundleCompleteAction {
         };
     };
 }
+
+interface CreateBundleArgs {
+    cellId: string;
+    input: string;
+}
+
+export const createBundle = createAsyncThunk(
+    "bundle/createBundle",
+    async (args: CreateBundleArgs, thunkAPI) => {
+        try {
+            const result = await bundle(args.input);
+            const payload = {
+                cellId: args.cellId,
+                bundle: result,
+            };
+            return payload;
+        } catch (error) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            console.log("unexpected error occurred", error);
+            return thunkAPI.rejectWithValue("unexpected error occurred");
+        }
+    },
+);
 
 export type Action =
     | MoveCellAction
