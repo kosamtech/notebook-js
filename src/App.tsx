@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import * as esbuild from "esbuild-wasm";
-// import CodeCell from "./components/code-cell";
-import TextEditor from "./components/text-editor";
+import CellList from "./components/cell-list";
 
 function App() {
     useEffect(() => {
@@ -12,12 +11,7 @@ function App() {
             });
         })();
     }, []);
-    return (
-        <>
-            <TextEditor />
-            {/* <CodeCell /> */}
-        </>
-    );
+    return <CellList />;
 }
 
 export default App;
