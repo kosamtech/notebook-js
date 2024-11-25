@@ -5,9 +5,8 @@ import AddCell from "./add-cell";
 import "./cell-list.css";
 
 const CellList: FC = () => {
-    const cells = useTypedSelector(({ cells: { order, data } }) =>
-        order.map((id) => data[id]),
-    );
+    const { order, data } = useTypedSelector((state) => state.cells);
+    const cells = order.map((id) => data[id]);
 
     const renderedCells = cells.map((cell) => (
         <Fragment key={cell.id}>
