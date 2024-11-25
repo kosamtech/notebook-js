@@ -32,6 +32,10 @@ const Preview: FC<PreviewProps> = ({ code, err }) => {
                             handleError(err);
                         }
                     },false);
+                    window.top.addEventListener("error", (event) => {
+                        event.preventDefault();
+                        handleError(event.error);
+                    })
                 </script>
             </body>
             </html>
