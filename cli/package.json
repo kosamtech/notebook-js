@@ -1,0 +1,26 @@
+{
+    "name": "notebook-js",
+    "version": "1.0.0",
+    "description": "Notebook replica for Javascript",
+    "scripts": {
+        "start": "tsc --watch --preserveWatchOutput",
+        "test": "jest"
+    },
+    "keywords": [
+        "Notebook",
+        "JS",
+        "TS",
+        "ESBuild",
+        "React"
+    ],
+    "author": "Kosam Omollo",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/node": "^22.10.1",
+        "typescript": "^5.7.2"
+    },
+    "dependencies": {
+        "commander": "^12.1.0",
+        "local-api": "^1.0.0"
+    }
+}

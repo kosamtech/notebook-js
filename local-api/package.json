@@ -1,0 +1,28 @@
+{
+    "name": "local-api",
+    "version": "1.0.0",
+    "description": "Express API to server the Notebook JS application",
+    "main": "index.js",
+    "devDependencies": {
+        "@types/express": "^5.0.0",
+        "typescript": "^5.7.2"
+    },
+    "scripts": {
+        "test": "jest",
+        "start": "tsc --watch --preserveWatchOutput"
+    },
+    "keywords": [
+        "Express",
+        "API",
+        "Notebook",
+        "JS",
+        "TS"
+    ],
+    "author": "Kosam Omollo",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.21.1",
+        "http-proxy-middleware": "^3.0.3",
+        "local-client": "^1.0.0"
+    }
+}
