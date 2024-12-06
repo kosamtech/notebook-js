@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Cell } from "../cell";
 import {
     DeleteCellAction,
+    fetchCells,
     InsertCellAfterAction,
     MoveCellAction,
+    saveCells,
     UpdateCellAction,
 } from "../actions";
 
@@ -63,6 +65,34 @@ const cellSlice = createSlice({
             }
         },
     },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchCells.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchCells.fulfilled, (state, action) => {
+                state.loading = false;
+                state.order = action.payload.map(c => c.id);
+                state.data = action.payload.reduce((acc, cell) => {
+                    acc[cell.id] = cell;
+                    return acc;
+                }, {} as CellState['data'])
+            })
+            .addCase(fetchCells.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string
+            })
+            .addCase(saveCells.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(saveCells.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(saveCells.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+    }
 });
 
 const randomId = () => Math.random().toString(36).substring(2, 5);

@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CellType } from "../cell";
+import axios from "axios";
+import { Cell, CellType } from "../cell";
 import bundle from "../../bundler";
+import { RootState } from "../store";
 
 export type Direction = "up" | "down";
 
@@ -69,6 +71,39 @@ export const createBundle = createAsyncThunk(
         }
     },
 );
+
+export const fetchCells = createAsyncThunk(
+    "cell/fetchCell",
+    async (_, thunkAPI) => {
+        try {
+            const { data }: { data: Cell[] } = await axios.get('/cells');
+            return data;
+        } catch (error) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            console.log("unexpected error occurred", error);
+            return thunkAPI.rejectWithValue("unexpected error occurred");
+        }
+    }
+)
+
+export const saveCells = createAsyncThunk(
+    'cell/saveCells',
+    async (_, thunkAPI) => {
+        try {
+            const { cells: { data, order } } = thunkAPI.getState() as RootState;
+            const cells = order.map(id => data[id]);
+            return await axios.post('/cells', { cells });
+        } catch (error) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            console.log("unexpected error occurred", error);
+            return thunkAPI.rejectWithValue("unexpected error occurred");
+        }
+    }
+)
 
 export type Action =
     | MoveCellAction

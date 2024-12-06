@@ -30,4 +30,4 @@ export const serve = (
     });
 };
 
-serve(4005, "notebook.js", "/", true);
+serve(4005, "notebook.js", path.dirname(__filename), true);

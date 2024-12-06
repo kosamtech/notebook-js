@@ -1,4 +1,4 @@
-import { createBundle } from "./actions";
+import { createBundle, fetchCells, saveCells } from "./actions";
 import bundleSlice from "./slices/bundleSlice";
 import cellSlice from "./slices/cellSlice";
 
@@ -10,4 +10,6 @@ export const actionCreators = {
     ...cellSlice.actions,
     ...bundleSlice.actions,
     createBundle,
+    fetchCells,
+    saveCells
 };
