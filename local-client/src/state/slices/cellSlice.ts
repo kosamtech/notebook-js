@@ -95,6 +95,6 @@ const cellSlice = createSlice({
     }
 });
 
-const randomId = () => Math.random().toString(36).substring(2, 5);
+const randomId = () => Math.random().toString(36).substring(2, 10);
 
 export default cellSlice;
