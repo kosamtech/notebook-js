@@ -76,7 +76,7 @@ export const fetchCells = createAsyncThunk(
     "cell/fetchCell",
     async (_, thunkAPI) => {
         try {
-            const { data }: { data: Cell[] } = await axios.get('/cells');
+            const { data }: { data: Cell[] } = await axios.get('http://localhost:4005/api/v1/cells');
             return data;
         } catch (error) {
             if (error instanceof Error) {
@@ -94,7 +94,7 @@ export const saveCells = createAsyncThunk(
         try {
             const { cells: { data, order } } = thunkAPI.getState() as RootState;
             const cells = order.map(id => data[id]);
-            return await axios.post('/cells', { cells });
+            return await axios.post('http://localhost:4005/api/v1/cells', { cells });
         } catch (error) {
             if (error instanceof Error) {
                 return thunkAPI.rejectWithValue(error.message);

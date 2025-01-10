@@ -42,7 +42,7 @@ export const createCellsRouter = (filename: string, dir: string) => {
         }
     });
 
-    router.post("api/v1/cells", async (req, res) => {
+    router.post("/api/v1/cells", async (req, res) => {
         const { cells }: { cells: Cell[] } = req.body;
 
         try {
