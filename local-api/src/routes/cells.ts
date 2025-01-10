@@ -23,7 +23,7 @@ export const createCellsRouter = (filename: string, dir: string) => {
         return typeof err.code === "string";
     };
 
-    router.get("/cells", async (req, res) => {
+    router.get("/api/v1/cells", async (req, res) => {
         // Read the file
         // Parse a list of cells out of it
         // Send list of cells back to broswer
@@ -42,7 +42,7 @@ export const createCellsRouter = (filename: string, dir: string) => {
         }
     });
 
-    router.post("/cells", async (req, res) => {
+    router.post("api/v1/cells", async (req, res) => {
         const { cells }: { cells: Cell[] } = req.body;
 
         try {

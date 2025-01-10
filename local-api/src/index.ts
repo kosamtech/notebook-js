@@ -21,13 +21,19 @@ export const serve = (
             }),
         );
     } else {
-        const pkgPath = require.resolve("local-client/build/index.html");
-        app.use(express.static(path.dirname(pkgPath)));
+        // const pkgPath = require.resolve("local-client/build/index.html");
+        // app.use(express.static(path.dirname(pkgPath)));
+        app.get("/", (req, res) => {
+            res.send("API is running successfully...");
+        });
     }
 
     return new Promise<void>((resolve, reject) => {
-        app.listen(port, resolve).on("error", reject);
+        app.listen(port, () => {
+            console.log(`server running on http://localhost:${port}`);
+            resolve;
+        }).on("error", reject);
     });
 };
 
-serve(4005, "notebook.js", path.dirname(__filename), true);
+serve(4005, "notebook.json", path.dirname(__filename), false);

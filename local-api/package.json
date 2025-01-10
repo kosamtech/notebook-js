@@ -2,14 +2,18 @@
     "name": "local-api",
     "version": "1.0.0",
     "description": "Express API to server the Notebook JS application",
-    "main": "index.js",
+    "main": "./dist/index.js",
     "devDependencies": {
         "@types/express": "^5.0.0",
+        "prettier": "^3.4.2",
         "typescript": "^5.7.2"
     },
     "scripts": {
         "test": "jest",
-        "start": "tsc --watch --preserveWatchOutput"
+        "dev": "tsc --watch --preserveWatchOutput",
+        "start": "node ./dist/index.js",
+        "build": "tsc",
+        "format": "prettier --tab-width 4 --write ./src"
     },
     "keywords": [
         "Express",
@@ -22,7 +26,6 @@
     "license": "MIT",
     "dependencies": {
         "express": "^4.21.1",
-        "http-proxy-middleware": "^3.0.3",
-        "local-client": "^1.0.0"
+        "http-proxy-middleware": "^3.0.3"
     }
 }
