@@ -13,7 +13,6 @@ export const unpkgPathPlugin = () => {
             build.onResolve(
                 { filter: /^\.+\// },
                 (args: esbuild.OnResolveArgs) => {
-                    console.log("args in relative paths", args);
                     return {
                         namespace: "a",
                         path: new URL(
@@ -28,7 +27,6 @@ export const unpkgPathPlugin = () => {
             build.onResolve(
                 { filter: /.*/ },
                 async (args: esbuild.OnResolveArgs) => {
-                    console.log("args in main file", args);
                     return {
                         namespace: "a",
                         path: `https://unpkg.com/${args.path}`,
