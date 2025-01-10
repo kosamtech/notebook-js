@@ -4,6 +4,7 @@
     "description": "Express API to server the Notebook JS application",
     "main": "./dist/index.js",
     "devDependencies": {
+        "@types/cors": "^2.8.17",
         "@types/express": "^5.0.0",
         "prettier": "^3.4.2",
         "typescript": "^5.7.2"
@@ -25,6 +26,7 @@
     "author": "Kosam Omollo",
     "license": "MIT",
     "dependencies": {
+        "cors": "^2.8.5",
         "express": "^4.21.1",
         "http-proxy-middleware": "^3.0.3"
     }
