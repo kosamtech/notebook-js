@@ -98,9 +98,13 @@ export const saveCells = createAsyncThunk(
                 cells: { data, order },
             } = thunkAPI.getState() as RootState;
             const cells = order.map((id) => data[id]);
-            return await axios.post("http://localhost:4005/api/v1/cells", {
-                cells,
-            });
+            return await axios.post(
+                "http://localhost:4005/api/v1/cells",
+                {
+                    cells,
+                },
+                { headers: { "Content-Type": "application/json" } },
+            );
         } catch (error) {
             if (error instanceof Error) {
                 return thunkAPI.rejectWithValue(error.message);

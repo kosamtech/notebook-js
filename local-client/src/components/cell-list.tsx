@@ -3,6 +3,7 @@ import { useTypedSelector } from "../hooks/use-typed-selector";
 import { useActions } from "../hooks/use-actions";
 import CellListItem from "./cell-list-item";
 import AddCell from "./add-cell";
+import SaveCell from "./save-cells";
 import "./cell-list.css";
 
 const CellList: FC = () => {
@@ -12,8 +13,8 @@ const CellList: FC = () => {
     const { fetchCells } = useActions();
 
     useEffect(() => {
-        fetchCells()
-    },[])
+        fetchCells();
+    }, []);
 
     const renderedCells = cells.map((cell) => (
         <Fragment key={cell.id}>
@@ -24,6 +25,7 @@ const CellList: FC = () => {
 
     return (
         <div className="cell-list">
+            <SaveCell />
             <AddCell forceVisible={cells.length === 0} previousCellId={null} />
             {renderedCells}
         </div>
