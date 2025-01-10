@@ -72,15 +72,18 @@ const cellSlice = createSlice({
             })
             .addCase(fetchCells.fulfilled, (state, action) => {
                 state.loading = false;
-                state.order = action.payload.map(c => c.id);
-                state.data = action.payload.reduce((acc, cell) => {
-                    acc[cell.id] = cell;
-                    return acc;
-                }, {} as CellState['data'])
+                state.order = action.payload.map((c) => c.id);
+                state.data = action.payload.reduce(
+                    (acc, cell) => {
+                        acc[cell.id] = cell;
+                        return acc;
+                    },
+                    {} as CellState["data"],
+                );
             })
             .addCase(fetchCells.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload as string
+                state.error = action.payload as string;
             })
             .addCase(saveCells.pending, (state) => {
                 state.loading = true;
@@ -91,8 +94,8 @@ const cellSlice = createSlice({
             .addCase(saveCells.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
-            })
-    }
+            });
+    },
 });
 
 const randomId = () => Math.random().toString(36).substring(2, 10);

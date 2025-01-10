@@ -11,5 +11,5 @@ export const actionCreators = {
     ...bundleSlice.actions,
     createBundle,
     fetchCells,
-    saveCells
+    saveCells,
 };

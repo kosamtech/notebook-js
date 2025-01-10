@@ -76,7 +76,9 @@ export const fetchCells = createAsyncThunk(
     "cell/fetchCell",
     async (_, thunkAPI) => {
         try {
-            const { data }: { data: Cell[] } = await axios.get('http://localhost:4005/api/v1/cells');
+            const { data }: { data: Cell[] } = await axios.get(
+                "http://localhost:4005/api/v1/cells",
+            );
             return data;
         } catch (error) {
             if (error instanceof Error) {
@@ -85,16 +87,20 @@ export const fetchCells = createAsyncThunk(
             console.log("unexpected error occurred", error);
             return thunkAPI.rejectWithValue("unexpected error occurred");
         }
-    }
-)
+    },
+);
 
 export const saveCells = createAsyncThunk(
-    'cell/saveCells',
+    "cell/saveCells",
     async (_, thunkAPI) => {
         try {
-            const { cells: { data, order } } = thunkAPI.getState() as RootState;
-            const cells = order.map(id => data[id]);
-            return await axios.post('http://localhost:4005/api/v1/cells', { cells });
+            const {
+                cells: { data, order },
+            } = thunkAPI.getState() as RootState;
+            const cells = order.map((id) => data[id]);
+            return await axios.post("http://localhost:4005/api/v1/cells", {
+                cells,
+            });
         } catch (error) {
             if (error instanceof Error) {
                 return thunkAPI.rejectWithValue(error.message);
@@ -102,8 +108,8 @@ export const saveCells = createAsyncThunk(
             console.log("unexpected error occurred", error);
             return thunkAPI.rejectWithValue("unexpected error occurred");
         }
-    }
-)
+    },
+);
 
 export type Action =
     | MoveCellAction
